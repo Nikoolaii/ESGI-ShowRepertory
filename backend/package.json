@@ -1,0 +1,30 @@
+{
+  "name": "showtrackerbackend",
+  "version": "1.0.0",
+  "description": "The backend of a show tracker project",
+  "main": "./app.js",
+  "scripts": {
+    "test": "npx nodemon ./app.ts"
+  },
+  "keywords": [
+    "typescript",
+    "prisma",
+    "backend",
+    "database"
+  ],
+  "author": "Nikoolaii",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.1.0",
+    "prisma": "^5.14.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5"
+  }
+}
