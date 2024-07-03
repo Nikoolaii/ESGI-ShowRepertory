@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Navbar from '../components/navbar.vue';
+import ProfileNavbar from "../../components/profile-navbar.vue";
 </script>
 
 <template>
   <div>
-    <Navbar/>
+    <ProfileNavbar/>
     <main>
       <slot></slot>
     </main>

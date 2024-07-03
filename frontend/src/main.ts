@@ -2,17 +2,11 @@ import {createApp} from 'vue'
 import './style.css'
 import './output.css'
 import App from './App.vue'
-import router from './utils/router'
-
+import router from './services/router-service.ts'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faBolt} from '@fortawesome/free-solid-svg-icons'
-import {faTv} from '@fortawesome/free-solid-svg-icons'
-import {faSitemap} from '@fortawesome/free-solid-svg-icons'
-import {library} from "@fortawesome/fontawesome-svg-core"
+import fontAwesomeLibrary from "./utils/font-awesome-library.ts";
 
-library.add(faBolt)
-library.add(faTv)
-library.add(faSitemap)
+fontAwesomeLibrary()
 
 createApp(App)
     .use(router)

@@ -1,30 +1,28 @@
-<style scoped>
-
-</style>
-
 <template>
   <div
-      class="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8"
+      class="px-4 py-6 mx-auto lg:py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8"
   >
-    <div class="relative flex grid items-center grid-cols-2 lg:grid-cols-3">
+    <div
+        class="relative flex items-center justify-between lg:justify-center lg:space-x-16"
+    >
       <ul class="flex items-center hidden space-x-8 lg:flex">
         <li>
-          <a
-              href="/"
-              aria-label="Homepage"
-              title="Homepage"
-              class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-          >Home</a
-          >
+          <router-link to='popular'>
+            <p
+                aria-label="Popular"
+                title="Popular"
+                class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+            >Popular</p
+            >
+          </router-link>
         </li>
         <li>
-          <router-link to='about'>
+          <router-link to='search'>
             <p
-                aria-label="About"
-                title="About"
-                class="font-medium tracking-wide text-gray-700 transition-colors duration-200
-            hover:text-deep-purple-accent-400"
-            >About</p
+                aria-label="Search"
+                title="Search"
+                class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+            >Search</p
             >
           </router-link>
         </li>
@@ -33,7 +31,7 @@
           href="/"
           aria-label="Company"
           title="Company"
-          class="inline-flex items-center lg:mx-auto"
+          class="inline-flex items-center"
       >
         <svg
             class="w-8 text-deep-purple-accent-400"
@@ -55,28 +53,31 @@
         >ShowTracker</span
         >
       </a>
-      <ul class="flex items-center hidden ml-auto space-x-8 lg:flex">
+      <ul class="flex items-center hidden space-x-8 lg:flex">
         <li>
-          <router-link to='login'>
+          <router-link to='/'>
             <p
-                aria-label="Login"
-                title="Login"
-                class="font-medium tracking-wide text-gray-700 transition-colors duration-200
-            hover:text-deep-purple-accent-400"
-            >Sign-in</p>
+                aria-label="Profile"
+                title="Profile"
+                class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+            >Profile</p
+            >
           </router-link>
         </li>
         <li>
-          <router-link to='register'>
-            <p
-                aria-label="Register"
-                title="Register"
-                class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-            >Sign-up</p>
-          </router-link>
+          <a
+              href="/"
+              aria-label="Disconnect"
+              title="Disconnect"
+              class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              @click="disconnect"
+          >
+            <font-awesome-icon icon="sign-out" class="w-4 h-4 text-deep-purple-accent-400"/>
+            Disconnect
+          </a>
         </li>
       </ul>
-      <div class="ml-auto lg:hidden">
+      <div class="lg:hidden">
         <button
             aria-label="Open Menu"
             title="Open Menu"
@@ -148,44 +149,46 @@
             <nav>
               <ul class="space-y-4">
                 <li>
+                  <router-link to="popular">
+                    <p
+                        aria-label="Popular"
+                        title="Popular"
+                        class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    >Popular</p
+                    >
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="search">
+                    <p
+                        aria-label="Search"
+                        title="Search"
+                        class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    >Search</p
+                    >
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/">
+                    <p
+                        aria-label="Profile"
+                        title="Profile"
+                        class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    >Profile</p
+                    >
+                  </router-link>
+                </li>
+                <li>
                   <a
                       href="/"
-                      aria-label="Homepage"
-                      title="Homepage"
+                      aria-label="Disconnect"
+                      title="Disconnect"
                       class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                  >Home</a
+                      @click="disconnect"
                   >
-                </li>
-                <li>
-                  <router-link to="about">
-                    <p
-                        aria-label="About"
-                        title="About"
-                        class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                    >About</p
-                    >
-                  </router-link>
-                </li>
-                <li>
-                  <router-link to="login">
-                    <p
-                        aria-label="Login"
-                        title="Login"
-                        class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                    >Sign-in</p
-                    >
-                  </router-link>
-                </li>
-                <li>
-                  <router-link to="register">
-                    <p
-                        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                        aria-label="Sign up"
-                        title="Sign up"
-                    >
-                      Sign up
-                    </p>
-                  </router-link>
+                    <font-awesome-icon icon="sign-out" class="w-4 h-4 text-deep-purple-accent-400"/>
+                    Disconnect
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -197,11 +200,19 @@
 </template>
 
 <script>
+
+import {disconnect} from "../controller/connexion-controller.ts"
+
 export default {
   data() {
     return {
       isMenuOpen: false,
     };
+  },
+  methods: {
+    disconnect() {
+      disconnect();
+    },
   },
 };
 </script>

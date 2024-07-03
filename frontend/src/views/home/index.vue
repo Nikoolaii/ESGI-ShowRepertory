@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import BaseLayout from '../base.vue';
+import LocalStorageService from "../../services/local-storage-service.ts";
+import {useRouter} from 'vue-router';
+
+const router = useRouter();
+
+if (LocalStorageService.getItem('token')) {
+  router.push({name: 'profile-index'});
+}
 </script>
 
 <template>
@@ -24,12 +32,13 @@ import BaseLayout from '../base.vue';
             </p>
           </div>
           <div class="flex items-center">
-            <a
-                href="/"
-                class="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-            >
-              Get started
-            </a>
+            <router-link to='register'>
+              <button
+                  class="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+              >
+                Get started
+              </button>
+            </router-link>
             <router-link to='about'>
               <p aria-label=""
                  class="inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800">
@@ -116,7 +125,7 @@ import BaseLayout from '../base.vue';
         <div class="flex flex-col max-w-md sm:mx-auto sm:flex-row">
           <div class="mr-4">
             <div class="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-indigo-50">
-              <font-awesome-icon icon="bolt" class="w-6 h-6 text-deep-purple-accent-400"/>
+              <font-awesome-icon icon="gauge" class="w-6 h-6 text-deep-purple-accent-400"/>
             </div>
           </div>
           <div>
