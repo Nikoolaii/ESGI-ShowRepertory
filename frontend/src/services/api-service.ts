@@ -30,21 +30,13 @@ export default class ApiService {
 
             })
             .catch(function (error) {
-                console.error(error);
                 if (error.code == "ERR_NETWORK") {
                     return {
                         error: "Network error."
                     }
                 }
-
-                if (error.code == "ERR_BAD_REQUEST") {
-                    return {
-                        error: "Bad request."
-                    }
-
-                }
-
-                if (error.code == "UNAUTHORIZED") {
+                
+                if (error.response.data.error == "Unauthorized") {
                     disconnect();
                     return {
                         error: "Unauthorized."

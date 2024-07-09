@@ -1,24 +1,25 @@
 <script setup lang="ts">
 const props = defineProps<{
   data: any;
+  media_type: string;
 }>();
+
 
 </script>
 
 <template>
-  <router-link :to="'/shows/'+props.data.media_type +'/'+ props.data.id">
-    <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
-      <img :src="'https://image.tmdb.org/t/p/w500' + props.data.poster_path" alt="poster"
-           class="rounded-lg grayscale hover:grayscale-0 transition-all duration-500"
-           v-if="props.data.poster_path">
-      <img src="https://placehold.co/200x300" alt="placeholder"
-           class="rounded-lg grayscale hover:grayscale-0 transition-all duration-500" v-else>
-      <h2 class="text-xl font-semibold" v-if="props.data.title">{{ props.data.title }}</h2>
-      <h2 class="text-xl font-semibold" v-else-if="props.data.name">{{ props.data.name }}</h2>
+  <router-link :to="'/shows/'+ (props.data.media_type || props.media_type) + '/' + props.data.id" class="block">
+    <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center h-96 justify-between">
+      <img
+          :src="props.data.poster_path ? 'https://image.tmdb.org/t/p/w500' + props.data.poster_path : 'https://placehold.co/200x300'"
+          alt="poster"
+          class="rounded-lg grayscale hover:grayscale-0 transition-all duration-500 max-h-72 w-full object-cover">
+      <h2 class="text-xl font-semibold mt-4 text-center overflow-hidden overflow-ellipsis whitespace-nowrap w-full">
+        {{ props.data.title || props.data.name }}
+      </h2>
     </div>
   </router-link>
 </template>
 
 <style scoped>
-
 </style>

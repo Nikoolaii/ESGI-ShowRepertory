@@ -12,7 +12,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     const {id} = req.params;
     const post = await prisma.post.findUnique({
         where: {
-            id: parseInt(id)
+            id: parseInt(id),
         }
     });
     res.json(post);
@@ -29,8 +29,8 @@ router.get('/author/:authorId', async (req: Request, res: Response) => {
 });
 
 router.post('/', async (req: Request, res: Response) => {
-    const {title, content, authorId} = req.body;
-    if (!title || !content || !authorId) {
+    const {title, content, authorId, serieId, serieType} = req.body;
+    if (!title || !content || !authorId || !serieId || !serieType) {
         return res.status(400).json({
             error: 'Missing required fields. Please ensure title, content, and authorId are provided.'
         });
@@ -39,7 +39,9 @@ router.post('/', async (req: Request, res: Response) => {
         data: {
             title,
             content,
-            authorId: parseInt(authorId)
+            authorId: parseInt(authorId),
+            serieId: parseInt(serieId),
+            serieType
         }
     });
     res.json(post);
@@ -76,6 +78,17 @@ router.delete('/:id', async (req: Request, res: Response) => {
     res.json({
         message: 'Post deleted successfully.'
     });
+});
+
+router.get('/:showType/:showId', async (req: Request, res: Response) => {
+    const {showType, showId} = req.params;
+    const posts = await prisma.post.findMany({
+        where: {
+            serieType: showType,
+            serieId: parseInt(showId)
+        }
+    });
+    res.json(posts);
 });
 
 export default router;

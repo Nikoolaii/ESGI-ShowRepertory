@@ -21,56 +21,36 @@ model User {
   posts     Post[]
   seen      Seen[]
   favorites Favorite[]
-  comments  Comment[]
-  rates     Rate[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
-  title     String
-  content   String
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  Int
-  comments  Comment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Comment {
   id        Int      @id @default(autoincrement())
+  title     String
   content   String
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    Int
+  serieId   Int
+  serieType String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Favorite {
-  id      Int  @id @default(autoincrement())
-  user    User @relation(fields: [userId], references: [id])
-  userId  Int
-  serieId Int
+  id        Int    @id @default(autoincrement())
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+  serieId   Int
+  serieType String
 }
 
 model Seen {
-  id        Int  @id @default(autoincrement())
-  user      User @relation(fields: [userId], references: [id])
+  id        Int    @id @default(autoincrement())
+  user      User   @relation(fields: [userId], references: [id])
   userId    Int
   serieId   Int
+  serieType String
   saisonId  Int
   episodeId Int
-}
-
-model Rate {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  serieId   Int
-  rate      Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

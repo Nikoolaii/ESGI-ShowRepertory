@@ -4,9 +4,7 @@ import cors from 'cors';
 
 import userRouter from '../routes/user';
 import postRouter from '../routes/post';
-import commentRouter from '../routes/comment';
 import favoriteRouter from '../routes/favorite';
-import rateRouter from '../routes/rate';
 import seenRouter from '../routes/seen';
 import authRouter from '../routes/auth';
 import tmdbRouter from "./tmdb-api-service";
@@ -27,9 +25,7 @@ export default function routerService() {
 
     app.use('/users', authMiddleware, userRouter);
     app.use('/posts', authMiddleware, postRouter);
-    app.use('/comments', authMiddleware, commentRouter);
     app.use('/favorites', authMiddleware, favoriteRouter);
-    app.use('/rates', authMiddleware, rateRouter);
     app.use('/seen', authMiddleware, seenRouter);
     app.use('/auth', authRouter);
     app.use('/tmdb', authMiddleware, tmdbRouter);

@@ -29,8 +29,8 @@ router.get('/user/:userId', async (req: Request, res: Response) => {
 });
 
 router.post('/', async (req: Request, res: Response) => {
-    const {userId, serieId} = req.body;
-    if (!userId || !serieId) {
+    const {userId, serieId, serieType} = req.body;
+    if (!userId || !serieId || !serieType) {
         return res.status(400).json({
             error: 'Missing required fields. Please ensure userId and postId are provided.'
         });
@@ -38,7 +38,8 @@ router.post('/', async (req: Request, res: Response) => {
     const favorite = await prisma.favorite.create({
         data: {
             userId: parseInt(userId),
-            serieId: parseInt(serieId)
+            serieId: parseInt(serieId),
+            serieType
         }
     });
     res.json(favorite);

@@ -29,8 +29,8 @@ router.get('/user/:userId', async (req: Request, res: Response) => {
 });
 
 router.post('/', async (req: Request, res: Response) => {
-    const {userId, serieId, saisonId, episodeId} = req.body;
-    if (!userId || !serieId || !saisonId || !episodeId) {
+    const {userId, serieId, saisonId, episodeId, serieType} = req.body;
+    if (!userId || !serieId || !saisonId || !episodeId || !serieType) {
         return res.status(400).json({
             error: 'Missing required fields. Please ensure userId and postId are provided.'
         });
@@ -40,7 +40,8 @@ router.post('/', async (req: Request, res: Response) => {
             userId: parseInt(userId),
             serieId: parseInt(serieId),
             saisonId: parseInt(saisonId),
-            episodeId: parseInt(episodeId)
+            episodeId: parseInt(episodeId),
+            serieType
         }
     });
     res.json(seen);

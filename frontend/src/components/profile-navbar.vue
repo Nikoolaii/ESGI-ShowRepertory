@@ -7,7 +7,7 @@
     >
       <ul class="flex items-center hidden space-x-8 lg:flex">
         <li>
-          <router-link to='popular'>
+          <router-link :to="{name: 'popular'}">
             <p
                 aria-label="Popular"
                 title="Popular"
@@ -17,7 +17,7 @@
           </router-link>
         </li>
         <li>
-          <router-link to='search'>
+          <router-link :to="{name: 'search'}">
             <p
                 aria-label="Search"
                 title="Search"
@@ -149,7 +149,7 @@
             <nav>
               <ul class="space-y-4">
                 <li>
-                  <router-link to="popular">
+                  <router-link :to="{name: 'popular'}">
                     <p
                         aria-label="Popular"
                         title="Popular"
@@ -159,7 +159,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="search">
+                  <router-link :to="{name: 'search'}">
                     <p
                         aria-label="Search"
                         title="Search"
