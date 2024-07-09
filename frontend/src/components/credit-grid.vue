@@ -10,8 +10,8 @@ const props = defineProps<{
       <img
           :src="credit.profile_path ? 'https://image.tmdb.org/t/p/w500' + credit.profile_path : 'https://placehold.co/200x300'"
           alt="profile" class="w-24 h-36"/>
-      <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ credit.name }}</p>
-      <p class="text-lg font-semibold text-deep-purple-accent-400 dark:text-gray-200">{{ credit.character }}</p>
+      <p class="text-lg font-semibold text-gray-800 ">{{ credit.name }}</p>
+      <p class="text-lg font-semibold text-deep-purple-accent-400 ">{{ credit.character }}</p>
     </div>
   </div>
 </template>

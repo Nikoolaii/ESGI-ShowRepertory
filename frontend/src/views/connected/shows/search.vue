@@ -33,7 +33,7 @@ const search = async (searchQuery: string) => {
       <loader></loader>
     </div>
     <div v-else>
-      <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200 text-center my-4">Search a movie or a show</h1>
+      <h1 class="text-2xl font-bold text-gray-800 text-center my-4">Search a movie or a show</h1>
       <search-form @search="search"></search-form>
 
       <div id="search-results" class="flex items-center justify-center space-y-4 mt-4">

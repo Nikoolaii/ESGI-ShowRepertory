@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import ProfileBase from '../base.vue';
 import {useRoute} from "vue-router";
-import ApiService from "../../../services/api-service.ts";
 import {ref, computed} from "vue";
+
+import ApiService from "../../../services/api-service.ts";
+import getSaisons from "../../../controller/episodes-controller.ts";
+
 import Loader from "../../../components/loader.vue";
 import CardGrid from "../../../components/card-grid.vue";
 import VideoGrid from "../../../components/video-grid.vue";
 import CreditGrid from "../../../components/credit-grid.vue";
 import CommentSection from "../../../components/comment-section.vue";
-import get_saisons from "../../../controller/episodes-controller.ts";
 import EpisodeSection from "../../../components/episode-section.vue";
+import MovieSection from "../../../components/movie-section.vue";
 
 const route = useRoute();
 const id = route.params.id;
 const type = route.params.type;
+const user = localStorage.getItem('user');
+const userID = user ? JSON.parse(user).id : '';
 
 const isLoading = ref(true);
 const result = ref({});
@@ -38,7 +43,7 @@ Promise.all([
   };
 
   if (type === 'tv') {
-    get_saisons(id, result.value.details.number_of_seasons).then((response) => {
+    getSaisons(id, result.value.details.number_of_seasons).then((response) => {
       result.value.saisons = response;
     });
   }
@@ -59,7 +64,7 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
     </div>
     <div v-else>
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
+        <h1 class="text-2xl font-bold text-gray-800 ">
           {{ result.details.title || result.details.name }}
         </h1>
         <div class="flex flex-row items-center justify-evenly">
@@ -69,16 +74,16 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
                 alt="poster" class="w-48 h-72"/>
           </div>
           <div class="w-2/4">
-            <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ result.details.overview }}</p>
+            <p class="text-lg font-semibold text-gray-800 ">{{ result.details.overview }}</p>
             <br/>
-            <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            <p class="text-lg font-semibold text-gray-800 ">
               <span class="text-bold">Release date: </span>
               {{ result.details.release_date || result.details.first_air_date }}
             </p>
-            <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            <p class="text-lg font-semibold text-gray-800 ">
               <span class="text-bold">Score: </span>{{ result.details.vote_average }}
             </p>
-            <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            <p class="text-lg font-semibold text-gray-800 " v-if="type == 'movie'">
               <span class="text-bold">Duration: </span>
               {{ result.details.runtime || result.details.episode_run_time[0] }} mins
             </p>
@@ -88,13 +93,17 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
       <hr class="my-4"/>
       <!-- Episode Section -->
       <div class="container mx-auto text-center" v-if="type == 'tv'">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Episodes</h1>
-        <episode-section :saisons="result.saisons"></episode-section>
+        <h1 class="text-2xl font-bold text-gray-800 ">Episodes</h1>
+        <episode-section :saisons="result.saisons" :userId="userID" :serieType="type" :serieId="id"></episode-section>
+      </div>
+      <div class="container mx-auto text-center" v-else-if="type == 'movie'">
+        <h1 class="text-2xl font-bold text-gray-800 ">Status</h1>
+        <MovieSection serieType="movie" :serieId="id" :userId="userID"></MovieSection>
       </div>
       <hr class="my-4"/>
       <!-- Credits Section -->
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Credits</h1>
+        <h1 class="text-2xl font-bold text-gray-800 ">Credits</h1>
         <credit-grid :data="displayedCredits"></credit-grid>
         <button @click="showAllCredits = !showAllCredits"
                 class="px-4 py-2 text-lg font-semibold text-white bg-deep-purple-accent-400 rounded-lg shadow-md hover:bg-deep-purple-accent-700 focus:outline-none focus:ring focus:ring-deep-purple-accent-400 focus:ring-opacity-50 my-4">
@@ -105,7 +114,7 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
 
       <!-- Videos Section -->
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Videos</h1>
+        <h1 class="text-2xl font-bold text-gray-800 ">Videos</h1>
         <video-grid :data="displayedVideos"></video-grid>
         <button @click="showAllVideos = !showAllVideos"
                 class="px-4 py-2 text-lg font-semibold text-white bg-deep-purple-accent-400 rounded-lg shadow-md hover:bg-deep-purple-accent-700 focus:outline-none focus:ring focus:ring-deep-purple-accent-400 focus:ring-opacity-50 my-4">
@@ -116,7 +125,7 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
 
       <!-- Recommendations Section -->
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Recommendations</h1>
+        <h1 class="text-2xl font-bold text-gray-800 ">Recommendations</h1>
         <div class="flex justify-center items-center">
           <card-grid :data="displayedRecommendations" :media_type="type"></card-grid>
         </div>
@@ -130,7 +139,7 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
 
       <!-- Similar Section -->
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Similar</h1>
+        <h1 class="text-2xl font-bold text-gray-800 ">Similar</h1>
         <div class="flex justify-center items-center">
           <card-grid :data="displayedSimilar" :media_type="type"></card-grid>
         </div>
@@ -142,7 +151,7 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
 
       <!-- Comment Section -->
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Comments</h1>
+        <h1 class="text-2xl font-bold text-gray-800 ">Comments</h1>
         <comment-section :show_id="id" :show_type="type"></comment-section>
       </div>
     </div>

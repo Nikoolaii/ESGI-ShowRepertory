@@ -9,7 +9,7 @@ const props = defineProps<{
     <div v-for="video in props.data" :key="video.id" class="flex flex-col items-center">
       <iframe :src="'https://www.youtube.com/embed/' + video.key" width="400" height="200" frameborder="0"
               allowfullscreen></iframe>
-      <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ video.name }}</p>
+      <p class="text-lg font-semibold text-gray-800">{{ video.name }}</p>
     </div>
   </div>
 

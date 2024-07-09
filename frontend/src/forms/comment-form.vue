@@ -43,12 +43,12 @@ const submitComment = () => {
 
 <template>
   <form @submit.prevent="submitComment">
-    <label for="title" class="text-lg font-semibold text-gray-800 dark:text-gray-200">Title</label>
-    <input type="text" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg my-4"
+    <label for="title" class="text-lg font-semibold text-gray-800 ">Title</label>
+    <input type="text" class="w-full p-2 border border-gray-300  rounded-lg my-4"
            v-model="commentTitle">
-    <label for="comment" class="text-lg font-semibold text-gray-800 dark:text-gray-200">Comment</label>
+    <label for="comment" class="text-lg font-semibold text-gray-800 ">Comment</label>
     <textarea v-model="commentText"
-              class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg my-4"></textarea>
+              class="w-full p-2 border border-gray-300  rounded-lg my-4"></textarea>
     <div class="mx-auto text-center">
       <p v-if="error" class="text-red-500">Error submitting comment</p>
       <button type="submit"

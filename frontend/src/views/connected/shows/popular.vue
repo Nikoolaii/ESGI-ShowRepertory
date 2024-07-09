@@ -31,7 +31,7 @@ const displayedShows = computed(() => showAllShows.value ? popularShows.value : 
     </div>
     <div v-else>
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Popular Movies</h1>
+        <h1 class="text-2xl font-bold text-gray-800">Popular Movies</h1>
         <card-grid :data="displayedMovies" media_type="movie"></card-grid>
         <button @click="showAllMovies = !showAllMovies"
                 class="px-4 py-2 text-lg font-semibold text-white bg-deep-purple-accent-400 rounded-lg shadow-md hover:bg-deep-purple-accent-700 focus:outline-none focus:ring focus:ring-deep-purple-accent-400 focus:ring-opacity-50 my-4">
@@ -44,7 +44,7 @@ const displayedShows = computed(() => showAllShows.value ? popularShows.value : 
       <hr class="my-5"/>
 
       <div class="container mx-auto text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Popular Shows</h1>
+        <h1 class="text-2xl font-bold text-gray-800">Popular Shows</h1>
         <card-grid :data="displayedShows" media_type="tv"></card-grid>
         <button @click="showAllShows = !showAllShows"
                 class="px-4 py-2 text-lg font-semibold text-white bg-deep-purple-accent-400 rounded-lg shadow-md hover:bg-deep-purple-accent-700 focus:outline-none focus:ring focus:ring-deep-purple-accent-400 focus:ring-opacity-50 my-4">

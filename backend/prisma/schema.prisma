@@ -49,8 +49,6 @@ model Seen {
   id        Int    @id @default(autoincrement())
   user      User   @relation(fields: [userId], references: [id])
   userId    Int
-  serieId   Int
   serieType String
-  saisonId  Int
   episodeId Int
 }

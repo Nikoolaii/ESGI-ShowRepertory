@@ -41,19 +41,19 @@ const addComment = (newComment) => {
       <div class="container mx-auto text-left">
         <div v-if="comments.length != 0">
           <div v-for="comment in comments" :key="comment.id">
-            <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ comment.title }}</h2>
-              <p class="text-gray-800 dark:text-gray-200 font-light"
+            <div class="bg-gray-100 p-4 rounded-lg my-4">
+              <h2 class="text-xl font-semibold text-gray-800 ">{{ comment.title }}</h2>
+              <p class="text-gray-800 font-light"
                  v-if="comment.user && comment.user.name">By {{
                   comment.user.name
                 }}</p>
               <br/>
-              <p class="text-gray-800 dark:text-gray-200">{{ comment.content }}</p>
+              <p class="text-gray-800 ">{{ comment.content }}</p>
             </div>
           </div>
         </div>
         <div v-else>
-          <p class="text-gray-800 dark:text-gray-200">No comments yet</p>
+          <p class="text-gray-800 ">No comments yet</p>
         </div>
         <comment-form :serie_id="props.show_id" :serie_type="props.show_type"
                       @comment-added="addComment"></comment-form>
