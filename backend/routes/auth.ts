@@ -24,7 +24,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
         if (!user) {
             return res.status(404).json({
-                error: 'User not found.'
+                error: 'User or password incorrect.'
             });
         }
 
@@ -41,7 +41,7 @@ router.post('/login', async (req: Request, res: Response) => {
             });
         } else {
             return res.status(400).json({
-                error: 'Incorrect password.'
+                error: 'User or password incorrect.'
             });
         }
     } catch (error) {

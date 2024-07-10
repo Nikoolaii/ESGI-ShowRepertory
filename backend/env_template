@@ -1,0 +1,5 @@
+DATABASE_URL="your_db_url"
+PORT=3001
+VUE_APP_TMDB_API_KEY="your_tmdb_api_key"
+VUE_APP_TMDB_BASE_URL="https://api.themoviedb.org/3/"
+JWT_SECRET="your_secret_key"
