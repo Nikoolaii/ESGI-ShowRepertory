@@ -14,6 +14,7 @@ import CreditGrid from "../../../components/credit-grid.vue";
 import CommentSection from "../../../components/comment-section.vue";
 import EpisodeSection from "../../../components/episode-section.vue";
 import MovieSection from "../../../components/movie-section.vue";
+import FavoriteButton from "../../../components/favorite-button.vue";
 
 const route = useRoute();
 const id = route.params.id;
@@ -67,6 +68,7 @@ const displayedSimilar = computed(() => showAllSimilar.value ? result.value.simi
       <div class="container mx-auto text-center">
         <h1 class="text-2xl font-bold text-gray-800 ">
           {{ result.details.title || result.details.name }}
+          <FavoriteButton :serie_type="type" :serie_id="id"></FavoriteButton>
         </h1>
         <div class="flex flex-row items-center justify-evenly">
           <div class="flex justify-center items-center">

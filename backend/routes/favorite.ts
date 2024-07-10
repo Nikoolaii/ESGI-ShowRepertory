@@ -55,4 +55,28 @@ router.delete('/:id', async (req: Request, res: Response) => {
     res.json({message: 'Favorite deleted successfully.'});
 });
 
+router.get('/user/:userId/:serieType/:serieId', async (req: Request, res: Response) => {
+    const {userId, serieType, serieId} = req.params;
+    const favorite = await prisma.favorite.findFirst({
+        where: {
+            userId: parseInt(userId),
+            serieType,
+            serieId: parseInt(serieId)
+        }
+    });
+    res.json(favorite);
+});
+
+router.delete('/user/:userId/:serieType/:serieId', async (req: Request, res: Response) => {
+    const {userId, serieType, serieId} = req.params;
+    await prisma.favorite.deleteMany({
+        where: {
+            userId: parseInt(userId),
+            serieType,
+            serieId: parseInt(serieId)
+        }
+    });
+    res.json({message: 'Favorite deleted successfully.'});
+});
+
 export default router;
