@@ -45,7 +45,6 @@ router.post('/', async (req: Request, res: Response) => {
     if (!userId || !serieType || !serieId) {
         return res.status(400).json({error: 'Champs requis manquants.'});
     }
-    console.log(req.body)
     try {
         const seen = await prisma.seen.create({
             data: {
@@ -57,7 +56,6 @@ router.post('/', async (req: Request, res: Response) => {
         });
         res.json(seen);
     } catch (error) {
-        console.log(error);
         res.status(500).json({error: 'Erreur lors de la création de l\'enregistrement.'});
     }
 });

@@ -3,6 +3,7 @@ import {ref, watch, onMounted} from 'vue';
 import {parseISO, isBefore} from 'date-fns';
 import {RouteParamValue} from 'vue-router';
 import {checkEpisodeSeen, createSeen, deleteSeen} from '../controller/episodes-controller.ts';
+import Loader from "./loader.vue";
 
 const props = defineProps<{
   saisons: any[];
@@ -13,6 +14,7 @@ const props = defineProps<{
 
 const seasons = ref<{ season: number, episodes: any[] }[]>([]);
 const filteredSeasons = ref<{ season: number, episodes: any[] }[]>([]);
+const isLoading = ref(true);
 
 watch(() => props.saisons, (newSaisons) => {
   if (newSaisons) {
@@ -23,7 +25,6 @@ watch(() => props.saisons, (newSaisons) => {
         episodes: saison.episodes,
       });
     });
-    console.log(seasons.value)
     filterSeasons();
   }
 }, {immediate: true});
@@ -50,6 +51,9 @@ async function filterSeasons() {
     };
   }));
   filteredSeasons.value = updatedSeasons;
+  if (filteredSeasons.value.length > 0) {
+    isLoading.value = false;
+  }
 }
 
 async function createSeenEpisode(episodeId: string, serieId: string) {
@@ -70,48 +74,53 @@ onMounted(filterSeasons);
 </script>
 
 <template>
-  <div v-if="filteredSeasons.length" class="space-y-4 container">
-    <div v-for="season in filteredSeasons" :key="season.season"
-         class="bg-white p-4 rounded-lg shadow-md">
-      <details>
-        <summary class="cursor-pointer text-lg font-semibold text-gray-800">
-          Season {{ season.season }}
-        </summary>
-        <ul class="list-disc list-inside mt-2 space-y-2">
-          <li v-for="episode in season.episodes" :key="episode.id"
-              class="flex items-center space-x-4 bg-gray-50 border-2 rounded-md justify-between">
-            <div class="flex items-center space-x-4">
-              <img :src="`http://image.tmdb.org/t/p/w500/${episode.still_path}`" :alt="episode.name"
-                   class="w-20 h-20 object-cover rounded-lg shadow-md">
-              <div class="flex flex-col items-start">
-                <h4 class="text-lg font-semibold text-gray-800 ">{{ episode.episode_number }}.
-                  {{ episode.name }}</h4>
-                <p class="text-gray-800 ">Air date: {{ episode.air_date }}</p>
-              </div>
-            </div>
-            <div v-if="episode.validated" class="text-green-500 text-right ml-auto p-4"
-                 @click="removeSeenEpisode(episode.id, episode.show_id)">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M5 13l4 4L19 7"/>
-              </svg>
-            </div>
-            <div v-else class="text-red-500 text-right ml-auto p-4"
-                 @click="createSeenEpisode(episode.id, episode.show_id)">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"/>
-              </svg>
-            </div>
-          </li>
-        </ul>
-      </details>
-    </div>
+  <div v-if="isLoading" class="flex justify-center items-center h-96">
+    <Loader/>
   </div>
   <div v-else>
-    <p class="text-gray-800">No episodes available.</p>
+    <div v-if="filteredSeasons.length" class="space-y-4 container">
+      <div v-for="season in filteredSeasons" :key="season.season"
+           class="bg-white p-4 rounded-lg shadow-md">
+        <details>
+          <summary class="cursor-pointer text-lg font-semibold text-gray-800">
+            Season {{ season.season }}
+          </summary>
+          <ul class="list-disc list-inside mt-2 space-y-2">
+            <li v-for="episode in season.episodes" :key="episode.id"
+                class="flex items-center space-x-4 bg-gray-50 border-2 rounded-md justify-between">
+              <div class="flex items-center space-x-4">
+                <img :src="`http://image.tmdb.org/t/p/w500/${episode.still_path}`" :alt="episode.name"
+                     class="w-20 h-20 object-cover rounded-lg shadow-md">
+                <div class="flex flex-col items-start">
+                  <h4 class="text-lg font-semibold text-gray-800 ">{{ episode.episode_number }}.
+                    {{ episode.name }}</h4>
+                  <p class="text-gray-800 ">Air date: {{ episode.air_date }}</p>
+                </div>
+              </div>
+              <div v-if="episode.validated" class="text-green-500 text-right ml-auto p-4"
+                   @click="removeSeenEpisode(episode.id, episode.show_id)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <div v-else class="text-red-500 text-right ml-auto p-4"
+                   @click="createSeenEpisode(episode.id, episode.show_id)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </div>
+            </li>
+          </ul>
+        </details>
+      </div>
+    </div>
+    <div v-else>
+      <p class="text-gray-800">No episodes available.</p>
+    </div>
   </div>
 </template>
 

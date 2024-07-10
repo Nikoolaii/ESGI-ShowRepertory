@@ -5,6 +5,7 @@ import {ref, computed} from "vue";
 
 import ApiService from "../../../services/api-service.ts";
 import getSaisons from "../../../controller/episodes-controller.ts";
+import localStorageService from "../../../services/local-storage-service.ts";
 
 import Loader from "../../../components/loader.vue";
 import CardGrid from "../../../components/card-grid.vue";
@@ -17,8 +18,8 @@ import MovieSection from "../../../components/movie-section.vue";
 const route = useRoute();
 const id = route.params.id;
 const type = route.params.type;
-const user = localStorage.getItem('user');
-const userID = user ? JSON.parse(user).id : '';
+const user = localStorageService.getItem('user');
+const userID = user ? user.id : '';
 
 const isLoading = ref(true);
 const result = ref({});

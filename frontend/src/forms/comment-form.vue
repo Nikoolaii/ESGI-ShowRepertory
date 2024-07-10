@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import ApiService from "../services/api-service.ts";
+import localStorageService from "../services/local-storage-service.ts";
 
 const props = defineProps<{
   serie_id: string;
   serie_type: string;
 }>();
 
-const user = localStorage.getItem('user');
+const user = localStorageService.getItem('user');
 const commentText = ref('');
 const commentTitle = ref('');
 
 const error = ref(false);
 
-const userID = user ? JSON.parse(user).id : '';
+const userID = user ? user.id : '';
 
 const emit = defineEmits(['comment-added']);
 

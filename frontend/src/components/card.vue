@@ -13,7 +13,7 @@ const props = defineProps<{
       <img
           :src="props.data.poster_path ? 'https://image.tmdb.org/t/p/w500' + props.data.poster_path : 'https://placehold.co/200x300'"
           alt="poster"
-          class="rounded-lg grayscale hover:grayscale-0 transition-all duration-500 max-h-72 w-full object-cover">
+          class="rounded-lg transition-all duration-500 max-h-72 w-full object-cover">
       <h2 class="text-xl font-semibold mt-4 text-center overflow-hidden overflow-ellipsis whitespace-nowrap w-full">
         {{ props.data.title || props.data.name }}
       </h2>
