@@ -78,7 +78,7 @@ export default {
         } else {
           LocalStorageService.setItem('token', result.token);
           LocalStorageService.setItem('user', result.user)
-          this.$router.push('/');
+          this.$router.push({name: 'profile-index'});
         }
       }
     },
