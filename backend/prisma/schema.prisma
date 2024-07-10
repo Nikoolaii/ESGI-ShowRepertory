@@ -50,5 +50,6 @@ model Seen {
   user      User   @relation(fields: [userId], references: [id])
   userId    Int
   serieType String
-  episodeId Int
+  episodeId Int?
+  serieId   Int
 }

@@ -18,9 +18,12 @@ async function getSaisons(serieId: string | RouteParamValue[], nbSeasons: number
     }
 }
 
-export async function checkEpisodeSeen(episodeId: string | RouteParamValue[], userId: number | RouteParamValue[], serieType: string | RouteParamValue[]) {
+export async function checkEpisodeSeen(episodeId: string | null, userId: number | RouteParamValue[], serieType: string | RouteParamValue[], serieId: string | RouteParamValue[]) {
     try {
-        const seen = await ApiService.callApi('seen/' + serieType + '/' + userId + '/' + episodeId, 'get');
+        const seen = await ApiService.callApi(
+            'seen/' + serieType + '/' + userId + '/' + serieId + '/' + (episodeId != null ? episodeId : ''),
+            'get'
+        );
         if (!seen.error) {
             return true;
         }
@@ -31,12 +34,13 @@ export async function checkEpisodeSeen(episodeId: string | RouteParamValue[], us
     }
 }
 
-export async function createSeen(episodeId: string | RouteParamValue[], userId: number | RouteParamValue[], serieType: string | RouteParamValue[]) {
+export async function createSeen(episodeId: string | null, userId: number | RouteParamValue[], serieType: string | RouteParamValue[], serieId: string | RouteParamValue[]) {
     try {
         const seen = await ApiService.callApi('seen', 'post', {
             userId: userId,
             episodeId: episodeId,
-            serieType: serieType
+            serieType: serieType,
+            serieId: serieId
         });
         if (!seen.error) {
             return true;
@@ -47,13 +51,13 @@ export async function createSeen(episodeId: string | RouteParamValue[], userId: 
     }
 }
 
-export async function deleteSeen(serieId: string | RouteParamValue[], userId: number | RouteParamValue[], serieType: string | RouteParamValue[]) {
+export async function deleteSeen(episodeId: string | null, userId: number | RouteParamValue[], serieType: string | RouteParamValue[], serieId: string | RouteParamValue[]) {
     try {
-        const seen = await ApiService.callApi('seen/' + serieType + '/' + userId + '/' + serieId, 'delete');
+        const seen = await ApiService.callApi('seen/' + serieType + '/' + userId + '/' + serieId + '/' + (episodeId != null ? episodeId : ''), 'delete');
         if (!seen.error) {
             return true;
         }
-        return false
+        return false;
     } catch (error) {
         return false;
     }

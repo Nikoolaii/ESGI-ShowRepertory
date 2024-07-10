@@ -23,6 +23,7 @@ watch(() => props.saisons, (newSaisons) => {
         episodes: saison.episodes,
       });
     });
+    console.log(seasons.value)
     filterSeasons();
   }
 }, {immediate: true});
@@ -36,6 +37,7 @@ async function filterSeasons() {
           episode.id,
           props.userId,
           props.serieType,
+          episode.show_id
       );
       return {
         ...episode,
@@ -50,15 +52,15 @@ async function filterSeasons() {
   filteredSeasons.value = updatedSeasons;
 }
 
-async function createSeenEpisode(episodeId: string) {
-  const createRequest = await createSeen(episodeId, props.userId, props.serieType);
+async function createSeenEpisode(episodeId: string, serieId: string) {
+  const createRequest = await createSeen(episodeId, props.userId, props.serieType, serieId);
   if (createRequest) {
     filterSeasons();
   }
 }
 
-async function removeSeenEpisode(episodeId: string) {
-  const deleteRequest = await deleteSeen(episodeId, props.userId, props.serieType);
+async function removeSeenEpisode(episodeId: string, serieId: string) {
+  const deleteRequest = await deleteSeen(episodeId, props.userId, props.serieType, serieId);
   if (deleteRequest) {
     filterSeasons();
   }
@@ -88,14 +90,15 @@ onMounted(filterSeasons);
               </div>
             </div>
             <div v-if="episode.validated" class="text-green-500 text-right ml-auto p-4"
-                 @click="removeSeenEpisode(episode.id)">
+                 @click="removeSeenEpisode(episode.id, episode.show_id)">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                    stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M5 13l4 4L19 7"/>
               </svg>
             </div>
-            <div v-else class="text-red-500 text-right ml-auto p-4" @click="createSeenEpisode(episode.id)">
+            <div v-else class="text-red-500 text-right ml-auto p-4"
+                 @click="createSeenEpisode(episode.id, episode.show_id)">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                    stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

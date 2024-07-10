@@ -12,18 +12,18 @@ const props = defineProps<{
 const isValidated = ref<boolean>(false);
 
 async function checkMovieStatus() {
-  isValidated.value = await checkEpisodeSeen(props.serieId, props.userId, props.serieType);
+  isValidated.value = await checkEpisodeSeen(null, props.userId, props.serieType, props.serieId);
 }
 
 async function createSeenMovie() {
-  const createRequest = await createSeen(props.serieId, props.userId, props.serieType);
+  const createRequest = await createSeen(null, props.userId, props.serieType, props.serieId);
   if (createRequest) {
     checkMovieStatus();
   }
 }
 
 async function removeSeenMovie() {
-  const deleteRequest = await deleteSeen(props.serieId, props.userId, props.serieType);
+  const deleteRequest = await deleteSeen(null, props.userId, props.serieType, props.serieId);
   if (deleteRequest) {
     checkMovieStatus();
   }

@@ -41,20 +41,23 @@ router.get('/user/:userId', async (req: Request, res: Response) => {
 });
 
 router.post('/', async (req: Request, res: Response) => {
-    const {userId, episodeId, serieType} = req.body;
-    if (!userId || !episodeId || !serieType) {
+    const {userId, episodeId, serieType, serieId} = req.body;
+    if (!userId || !serieType || !serieId) {
         return res.status(400).json({error: 'Champs requis manquants.'});
     }
+    console.log(req.body)
     try {
         const seen = await prisma.seen.create({
             data: {
                 userId: parseInt(userId),
-                episodeId: parseInt(episodeId),
-                serieType
+                episodeId: episodeId ? parseInt(episodeId) : null,
+                serieType,
+                serieId: parseInt(serieId)
             }
         });
         res.json(seen);
     } catch (error) {
+        console.log(error);
         res.status(500).json({error: 'Erreur lors de la création de l\'enregistrement.'});
     }
 });
@@ -74,34 +77,59 @@ router.delete('/:id', async (req: Request, res: Response) => {
     }
 });
 
-router.get('/:serieType/:userId/:episodeId', async (req: Request, res: Response) => {
-    const {serieType, episodeId, userId} = req.params;
+router.get('/tv/:userId/:serieId/:episodeId', async (req: Request, res: Response) => {
+    const {episodeId, userId, serieId} = req.params;
     try {
         const seen = await prisma.seen.findFirst({
             where: {
-                serieType,
+                serieType: 'tv',
                 episodeId: parseInt(episodeId),
-                userId: parseInt(userId)
+                userId: parseInt(userId),
+                serieId: parseInt(serieId)
             }
         });
         if (seen) {
             res.json(seen);
         } else {
-            res.json({error: 'Enregistrement non trouvé.'})
+            res.json({error: 'Enregistrement non trouvé.'});
         }
     } catch (error) {
         res.status(500).json({error: 'Erreur lors de la récupération de l\'enregistrement.'});
     }
 });
 
-router.delete('/:serieType/:userId/:episodeId', async (req: Request, res: Response) => {
-    const {serieType, episodeId, userId} = req.params;
+router.get('/movie/:userId/:serieId/', async (req: Request, res: Response) => {
+    const {userId, serieId} = req.params;
+    try {
+        const seen = await prisma.seen.findFirst({
+            where: {
+                serieType: 'movie',
+                userId: parseInt(userId),
+                serieId: parseInt(serieId)
+            }
+        });
+        if (seen) {
+            res.json(seen);
+        } else {
+            res.json({error: 'Enregistrement non trouvé.'});
+        }
+    } catch (error) {
+        res.status(500).json({error: 'Erreur lors de la récupération de l\'enregistrement.'});
+    }
+});
+
+router.delete('/:serieType/:userId/:serieId/:episodeId', async (req: Request, res: Response) => {
+    const {serieType, episodeId, userId, serieId} = req.params;
+    if (!serieType || !userId || !serieId) {
+        return res.status(400).json({error: 'Champs requis manquants.'});
+    }
     try {
         await prisma.seen.deleteMany({
             where: {
                 serieType,
-                episodeId: parseInt(episodeId),
-                userId: parseInt(userId)
+                episodeId: episodeId ? parseInt(episodeId) : null,
+                userId: parseInt(userId),
+                serieId: parseInt(serieId)
             }
         });
         res.json({message: 'Enregistrement supprimé avec succès.'});
@@ -109,4 +137,5 @@ router.delete('/:serieType/:userId/:episodeId', async (req: Request, res: Respon
         res.status(500).json({error: 'Erreur lors de la suppression de l\'enregistrement.'});
     }
 });
+
 export default router;
