@@ -10,11 +10,10 @@
   <br/>
   <img align="left" src="https://github.com/Nikoolaii/ESGI-ShowTracker/blob/main/imgs/st_1.jpeg" width="280" target="_blank"/>
   <img src="https://github.com/Nikoolaii/ESGI-ShowTracker/blob/main/imgs/st_2.jpeg" width="280" target="_blank"/>
-  <br/>
   <img align="left" src="https://github.com/Nikoolaii/ESGI-ShowTracker/blob/main/imgs/st_3.jpeg" width="280" target="_blank"/>
 </details>
 
-<br />
+<hr />
 
 ### Features 🚀
 
