@@ -14,6 +14,8 @@
   <img align="left" src="https://github.com/Nikoolaii/ESGI-ShowTracker/blob/main/imgs/st_3.jpeg" width="280" target="_blank"/>
 </details>
 
+<br />
+
 ### Features 🚀
 
 - 🌐 **Get movie and show information**
